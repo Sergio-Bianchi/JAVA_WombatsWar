@@ -80,6 +80,7 @@ public class Wombat extends Actor
         if(leaf != null) {
             // eat the leaf...
             getWorld().removeObject(leaf);
+            
             leavesEaten = leavesEaten + 1; 
         }
     }

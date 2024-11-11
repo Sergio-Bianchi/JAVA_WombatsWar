@@ -10,6 +10,8 @@ import java.util.Random;
  */
 public class WombatWorld extends World
 {
+    public int[][] grid;
+    
     /**
      * Create a new world with 8x8 cells and
      * with a cell size of 60x60 pixels
@@ -20,6 +22,45 @@ public class WombatWorld extends World
         setBackground("cell.jpg");
     }
 
+    
+    /** Setup the game to start 
+     * 
+     */
+    public void setup() {
+        grid = new int[8][8];
+        for(int i = 0; i < 2;) {
+            int wX = (int) (Math.random() * 8);
+            int wY = (int) (Math.random() * 8);
+            if(grid[wX][wY] == 0) {
+                if(i == 1) {
+                    WombatTwo w1 = new WombatTwo();
+                    addObject(w1, wX, wY);
+                    grid[wX][wY] = 1;
+                    i++;
+                }
+                else {
+                    Wombat w1 = new Wombat();
+                    addObject(w1, wX, wY);
+                    grid[wX][wY] = 1;
+                    i++;
+                }
+                
+            }
+        }
+        
+        for(int i = 0; i < 3;) {
+            int wX = (int) (Math.random() * 8);
+            int wY = (int) (Math.random() * 8);
+            if(grid[wX][wY] == 0) {
+                Leaf l1 = new Leaf();
+                addObject(l1, wX, wY);
+                grid[wX][wY] = 2;
+                i++;
+            }
+        }
+    }
+    
+    
     /**
      * Populate the world with a fixed scenario of wombats and leaves.
      */    
