@@ -3,15 +3,14 @@ import greenfoot.*;  // imports Actor, World, Greenfoot, GreenfootImage
 import java.util.Random;
 
 /**
- * A world where wombats live.
+ * A world where wombats fight.
  * 
- * @author Michael Kolling
- * @version 1.0.1
+ * @author Sergio Bianchi & Michael Kolling
+ * @version 12.11.2024
  */
 public class WombatWorld extends World
 {
     public int[][] grid;
-    
     /**
      * Create a new world with 8x8 cells and
      * with a cell size of 60x60 pixels
@@ -21,7 +20,13 @@ public class WombatWorld extends World
         super(8, 8, 60);        
         setBackground("cell.jpg");
     }
-
+    
+    /** 
+     * @return      world Grid
+     */
+    public int[][] getGrid() {
+        return grid;
+    }
     
     /** Setup the game to start 
      * 
@@ -33,13 +38,13 @@ public class WombatWorld extends World
             int wY = (int) (Math.random() * 8);
             if(grid[wX][wY] == 0) {
                 if(i == 1) {
-                    WombatTwo w1 = new WombatTwo();
+                    Wombat w1 = new PlayerTwo();
                     addObject(w1, wX, wY);
-                    grid[wX][wY] = 1;
+                    grid[wX][wY] = 2;
                     i++;
                 }
                 else {
-                    Wombat w1 = new Wombat();
+                    Wombat w1 = new PlayerOne();
                     addObject(w1, wX, wY);
                     grid[wX][wY] = 1;
                     i++;
@@ -54,41 +59,10 @@ public class WombatWorld extends World
             if(grid[wX][wY] == 0) {
                 Leaf l1 = new Leaf();
                 addObject(l1, wX, wY);
-                grid[wX][wY] = 2;
+                grid[wX][wY] = 3;
                 i++;
             }
         }
-    }
-    
-    
-    /**
-     * Populate the world with a fixed scenario of wombats and leaves.
-     */    
-    public void populate()
-    {
-        Wombat w1 = new Wombat();
-        addObject(w1, 3, 3);
-        
-        Wombat w2 = new Wombat();
-        addObject(w2, 1, 7);
-
-        Leaf l1 = new Leaf();
-        addObject(l1, 5, 3);
-
-        Leaf l2 = new Leaf();
-        addObject(l2, 0, 2);
-
-        Leaf l3 = new Leaf();
-        addObject(l3, 7, 5);
-
-        Leaf l4 = new Leaf();
-        addObject(l4, 2, 6);
-
-        Leaf l5 = new Leaf();
-        addObject(l5, 5, 0);
-        
-        Leaf l6 = new Leaf();
-        addObject(l6, 4, 7);
     }
     
     /**

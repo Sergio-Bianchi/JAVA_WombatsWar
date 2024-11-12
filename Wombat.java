@@ -19,44 +19,19 @@ public class Wombat extends Actor
 
     private int direction;
     private int leavesEaten;
+    private int player; 
 
-    public Wombat()
+    public Wombat(int player)
     {
         setDirection(EAST);
         leavesEaten = 0;
+        this.player = player;
     }
-
-    /**
-     * Do whatever the wombat likes to to just now.
-     */
-    public void act()
-    {
-        if(foundLeaf()) {
-            eatLeaf();
-        }
-        else if(Greenfoot.isKeyDown("right"))
-        {
-            setDirection(0);
-            move();
-        }
-        else if(Greenfoot.isKeyDown("left"))
-        {
-            setDirection(1);
-            move();
-        }
-        else if(Greenfoot.isKeyDown("up"))
-        {
-            setDirection(2);
-            move();
-        }
-        else if(Greenfoot.isKeyDown("down"))
-        {
-            setDirection(3);
-            move();
-        }
-        
+    
+    public int[][] getGrid() {
+        return ((WombatWorld) getWorld()).getGrid();
     }
-
+    
     /**
      * Check whether there is a leaf in the same cell as we are.
      */
@@ -90,6 +65,7 @@ public class Wombat extends Actor
      */
     public void move()
     {
+        WombatWorld myWorld = (WombatWorld) getWorld();
         if (!canMove()) {
             return;
         }
@@ -107,6 +83,7 @@ public class Wombat extends Actor
                 setLocation(getX() - 1, getY());
                 break;
         }
+        myWorld.grid[getX()][getY()] = 2; 
     }
 
     /**
