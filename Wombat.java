@@ -20,7 +20,7 @@ public class Wombat extends Actor
     private int direction;
     private int leavesEaten;
     private int player; 
-
+    
     public Wombat(int player)
     {
         setDirection(EAST);
@@ -29,9 +29,89 @@ public class Wombat extends Actor
     }
     
     public int[][] getGrid() {
-        return ((WombatWorld) getWorld()).getGrid();
+        return getWombatWorld().getGrid();
     }
     
+    public int getTurn() {
+        return getWombatWorld().getTurn();
+    }
+    
+    public WombatWorld getWombatWorld() {
+        return ((WombatWorld) getWorld());
+    }
+    
+    public void setTurn(int t) {
+        getWombatWorld().setTurn(t);
+    }
+    
+    public void switchTurn() {
+        getWombatWorld().switchTurn();
+    }
+    
+    public void goForward() {
+    
+        for(int i = 0; i < 8; i++) {
+            move();
+            if(foundLeaf()) {
+                eatLeaf();
+                getWombatWorld().addLeave();
+                System.out.print("LEAVES: ");
+                System.out.println(leavesEaten);
+                break;
+            }
+            if(foundWombat()) {
+                switch(direction) {
+                case SOUTH :
+                    setLocation(getX(), getY() - 1);
+                    break;
+                case EAST :
+                    setLocation(getX() - 1, getY());
+                    break;
+                case NORTH :
+                    setLocation(getX(), getY() + 1);
+                    break;
+                case WEST :
+                    setLocation(getX() + 1, getY());
+                    break;
+            }
+                break;
+            }
+
+        }
+            
+        
+    }
+    
+    
+    public boolean foundWombat() {
+        Actor wombat = getOneObjectAtOffset(0, 0, Wombat.class);
+        if(wombat != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    
+    }
+    
+    
+    public void poo() {
+        switch(direction) {
+            case SOUTH :
+                setLocation(getX(), getY() - 1);
+                break;
+            case EAST :
+                setLocation(getX() - 1, getY());
+                break;
+            case NORTH :
+                setLocation(getX(), getY() + 1);
+                break;
+            case WEST :
+                setLocation(getX() + 1, getY());
+                break;
+        }
+    }
+        
     /**
      * Check whether there is a leaf in the same cell as we are.
      */
