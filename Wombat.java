@@ -20,11 +20,14 @@ public class Wombat extends Actor
     private int direction;
     private int leavesEaten;
     private int player; 
+    private int timeout;
+    private int steps;
     
     public Wombat(int player)
     {
         setDirection(EAST);
         leavesEaten = 0;
+        steps = 0;
         this.player = player;
     }
     
@@ -48,40 +51,13 @@ public class Wombat extends Actor
         getWombatWorld().switchTurn();
     }
     
-    public void goForward() {
-    
-        for(int i = 0; i < 8; i++) {
-            move();
-            if(foundLeaf()) {
-                eatLeaf();
-                getWombatWorld().addLeave();
-                System.out.print("LEAVES: ");
-                System.out.println(leavesEaten);
-                break;
-            }
-            if(foundWombat()) {
-                switch(direction) {
-                case SOUTH :
-                    setLocation(getX(), getY() - 1);
-                    break;
-                case EAST :
-                    setLocation(getX() - 1, getY());
-                    break;
-                case NORTH :
-                    setLocation(getX(), getY() + 1);
-                    break;
-                case WEST :
-                    setLocation(getX() + 1, getY());
-                    break;
-            }
-                break;
-            }
-
-        }
-            
-        
+    public int getTimeout() {
+        return timeout;
     }
     
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
     
     public boolean foundWombat() {
         Actor wombat = getOneObjectAtOffset(0, 0, Wombat.class);
@@ -137,17 +113,19 @@ public class Wombat extends Actor
             getWorld().removeObject(leaf);
             
             leavesEaten = leavesEaten + 1; 
+            timeout = getWombatWorld().getTime() + 2;
+            getWombatWorld().addLeave();
         }
     }
     
     /**
      * Move one cell forward in the current direction.
      */
-    public void move()
+    public boolean move()
     {
         WombatWorld myWorld = (WombatWorld) getWorld();
         if (!canMove()) {
-            return;
+            return false;
         }
         switch(direction) {
             case SOUTH :
@@ -163,7 +141,8 @@ public class Wombat extends Actor
                 setLocation(getX() - 1, getY());
                 break;
         }
-        myWorld.grid[getX()][getY()] = 2; 
+        myWorld.grid[getX()][getY()] = 2;
+        return true;
     }
 
     /**

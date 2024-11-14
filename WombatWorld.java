@@ -13,6 +13,7 @@ public class WombatWorld extends World
     public int[][] grid;
     private int turn;
     private int time;
+    private int speed = 20;
     
     /**
      * Create a new world with 8x8 cells and
@@ -20,12 +21,20 @@ public class WombatWorld extends World
      */
     public WombatWorld() 
     {
-        super(8, 8, 60);        
+        super(8, 8, 60);  
+        Greenfoot.setSpeed(speed);
         turn = 0;
         time = 0;
         grid = new int[8][8];
         setBackground("cell.jpg");
     }
+    
+    
+    public void act() {
+        time++;
+        System.out.println(time);
+    }
+    
     
     /** 
      * @return      world Grid
@@ -130,6 +139,31 @@ public class WombatWorld extends World
         }
     }
     
+    /**
+     * Place a number of biomasses into the world at random places, if the slot is empty.
+     * The number of biomasses can be specified.
+     */
+    public void randomPoop(int howMany, int timeout)
+    {
+        for(int i=0; i<howMany;) {
+            int x = Greenfoot.getRandomNumber(getWidth());
+            int y = Greenfoot.getRandomNumber(getHeight());
+            if(getObjectsAt(x, y, null).isEmpty()) {
+                Biomass biomass = new Biomass(time+speed*timeout);
+                addObject(biomass, x, y);
+                i++;
+            }  
+        }
+    }
+    /**
+     * Place a number of biomasses with 10 seconds of timeout  
+     */
+    public void randomPoop(int howMany) {
+        randomPoop(howMany, 10);
+    }
+    public void addPoop() {
+        randomPoop(1);
+    }    
     public void addLeave() {
         randomLeaves(1);
     }

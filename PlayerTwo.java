@@ -13,34 +13,37 @@ public class PlayerTwo extends Wombat
      */
     public void act()
     {
-        if(getTurn() == 2) {
+        if(getTimeout() == getWombatWorld().getTime() && getTimeout() != 0) {
+            getWombatWorld().addPoop();
+            setTimeout(0);
+        }
+            
         if(foundLeaf()) {
             eatLeaf();
         }
         else if(Greenfoot.isKeyDown("right"))
         {
             setDirection(0);
-            goForward();
+            move();
             setTurn(1);
         }
         else if(Greenfoot.isKeyDown("left"))
         {
             setDirection(1);
-            goForward();
+            move();
             setTurn(1);
         }
         else if(Greenfoot.isKeyDown("up"))
         {
             setDirection(2);
-            goForward();
+            move();
             setTurn(1);
         }
         else if(Greenfoot.isKeyDown("down"))
         {
             setDirection(3);
-            goForward();
+            move();
             setTurn(1);
-        }
         }
     }
     
