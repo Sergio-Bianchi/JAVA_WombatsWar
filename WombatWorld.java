@@ -12,57 +12,55 @@ public class WombatWorld extends World
 {
     public int[][] grid;
     private int turn;
-    private int time;
-    private int speed = 20;
-    
+    private long time;
+    private int speed = 35;
+
     /**
      * Create a new world with 8x8 cells and
      * with a cell size of 60x60 pixels
      */
     public WombatWorld() 
     {
-        super(8, 8, 60);  
+        super(12, 12, 60);  
         Greenfoot.setSpeed(speed);
         turn = 0;
-        time = 0;
-        grid = new int[8][8];
+        time = System.currentTimeMillis();
+        grid = new int[getWidth()][getHeight()];
         setBackground("cell.jpg");
+        prepare();
     }
-    
-    
+
     public void act() {
-        time++;
-        System.out.println(time);
+        System.out.println(System.currentTimeMillis() - time);
     }
-    
-    
+
     /** 
      * @return      world Grid
      */
     public int[][] getGrid() {
         return grid;
     }
-    
+
     /** 
      * @return      world turn
      */
     public int getTurn() {
         return turn;
     }
-    
-     /** Adds a tick to the time
+
+    /** Adds a tick to the time
      */
     public void tick() {
         time++;
     }
-    
+
     /** 
      * @return      Returns the current game time (the total moves)
      */
-    public int getTime() {
-        return time;
+    public long getTime() {
+        return System.currentTimeMillis() - time;
     }
-    
+
     public void switchTurn() {
         tick();
         switch(turn) {
@@ -74,22 +72,20 @@ public class WombatWorld extends World
                 break;
         }
     }
-    
-    
+
     /** Imposta il valore del turno 
      *  @param  turn    Has to be 1 or 2
      */
     public void setTurn(int t) {
         turn = t;
     }
-    
+
     /** Setup the game to start 
      * 
      */
     public void setup() {
-        grid = new int[8][8];
+        grid = new int[getWidth()][getHeight()];
         turn = 1;
-        time = 0;
         for(int i = 0; i < 2;) {
             int wX = Greenfoot.getRandomNumber(getWidth());
             int wY = Greenfoot.getRandomNumber(getHeight());
@@ -106,22 +102,22 @@ public class WombatWorld extends World
                     grid[wX][wY] = 1;
                     i++;
                 }
-                
+
             }
         }
-        
+
         for(int i = 0; i < 3;) {
-            int wX = (int) (Math.random() * 8);
-            int wY = (int) (Math.random() * 8);
+            int wX = (int) (Math.random() * getWidth());
+            int wY = (int) (Math.random() * getHeight());
             if(getObjectsAt(wX, wY, null).isEmpty()) {
-                 Leaf l1 = new Leaf();
+                Leaf l1 = new Leaf();
                 addObject(l1, wX, wY);
                 grid[wX][wY] = 3;
                 i++;
             }    
         }
     }
-    
+
     /**
      * Place a number of leaves into the world at random places, if the slot is empty.
      * The number of leaves can be specified.
@@ -138,7 +134,7 @@ public class WombatWorld extends World
             }  
         }
     }
-    
+
     /**
      * Place a number of biomasses into the world at random places, if the slot is empty.
      * The number of biomasses can be specified.
@@ -149,22 +145,33 @@ public class WombatWorld extends World
             int x = Greenfoot.getRandomNumber(getWidth());
             int y = Greenfoot.getRandomNumber(getHeight());
             if(getObjectsAt(x, y, null).isEmpty()) {
-                Biomass biomass = new Biomass(time+speed*timeout);
+                Biomass biomass = new Biomass(getTime() + timeout);
                 addObject(biomass, x, y);
                 i++;
             }  
         }
     }
+
     /**
      * Place a number of biomasses with 10 seconds of timeout  
      */
     public void randomPoop(int howMany) {
-        randomPoop(howMany, 10);
+        randomPoop(howMany, 10000);
     }
+
     public void addPoop() {
         randomPoop(1);
     }    
+
     public void addLeave() {
         randomLeaves(1);
+    }
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    private void prepare()
+    {
+        setup();
     }
 }

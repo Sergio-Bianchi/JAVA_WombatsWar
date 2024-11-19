@@ -20,7 +20,7 @@ public class Wombat extends Actor
     private int direction;
     private int leavesEaten;
     private int player; 
-    private int timeout;
+    private long timeout;
     private int steps;
     
     public Wombat(int player)
@@ -51,7 +51,7 @@ public class Wombat extends Actor
         getWombatWorld().switchTurn();
     }
     
-    public int getTimeout() {
+    public long getTimeout() {
         return timeout;
     }
     
@@ -113,7 +113,7 @@ public class Wombat extends Actor
             getWorld().removeObject(leaf);
             
             leavesEaten = leavesEaten + 1; 
-            timeout = getWombatWorld().getTime() + 2;
+            timeout = getWombatWorld().getTime() + 2000;
             getWombatWorld().addLeave();
         }
     }

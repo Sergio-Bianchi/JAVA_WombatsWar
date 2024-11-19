@@ -13,7 +13,7 @@ public class PlayerOne extends Wombat
      */
     public void act()
     {
-        if(getTimeout() == getWombatWorld().getTime() && getTimeout() != 0) {
+        if(getTimeout() <= getWombatWorld().getTime() && getTimeout() != 0) {
             getWombatWorld().addPoop();
             setTimeout(0);
         }

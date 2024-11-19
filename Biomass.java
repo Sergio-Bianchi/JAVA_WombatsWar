@@ -8,10 +8,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Biomass extends Actor
 {
-    private int timeout;
+    private long timeout;
     
     
-    public Biomass(int timeout) {
+    public Biomass(long timeout) {
         this.timeout = timeout;
     }
 
@@ -27,7 +27,7 @@ public class Biomass extends Actor
         System.out.print("Remains: ");
         System.out.println((timeout - ((WombatWorld) getWorld()).getTime()));
         
-        if(timeout == ((WombatWorld) getWorld()).getTime()) {
+        if(timeout <= ((WombatWorld) getWorld()).getTime()) {
             getWorld().removeObject(this);
         }
     }
