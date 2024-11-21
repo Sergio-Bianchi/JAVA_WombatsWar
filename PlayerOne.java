@@ -12,40 +12,41 @@ public class PlayerOne extends Wombat
      * Do whatever the wombat likes to to just now.
      */
     public void act()
-    {
-        if(getTimeout() <= getWombatWorld().getTime() && getTimeout() != 0) {
-            getWombatWorld().addPoop();
-            setTimeout(0);
-        }
-           
+    {      
         if(foundLeaf()) {
             eatLeaf();
+            getWombatWorld().addPoop();
+        } 
+        if(foundPoop()) {
+            setTimeout(1000);
         }
-        else if(Greenfoot.isKeyDown("D"))
-        {
-            setDirection(0);
-            move();
-            setTurn(2);
+        if(getTimeout() <= getWombatWorld().getTime()) {
+            if(Greenfoot.isKeyDown("D"))
+            {
+                setDirection(0);
+                move();
+            }
+            else if(Greenfoot.isKeyDown("A"))
+            {
+                setDirection(1);
+                move();
+            }
+            else if(Greenfoot.isKeyDown("W"))
+            {
+                setDirection(2);
+                move();
+            }
+            else if(Greenfoot.isKeyDown("S"))
+            {
+                setDirection(3);
+                move();
+            }
+            
+             if (foundWombat()) {
+                snapBack();
+            }
         }
-        else if(Greenfoot.isKeyDown("A"))
-        {
-            setDirection(1);
-            move();
-            setTurn(2);
-        }
-        else if(Greenfoot.isKeyDown("W"))
-        {
-            setDirection(2);
-            move();
-            setTurn(2);
-        }
-        else if(Greenfoot.isKeyDown("S"))
-        {
-            setDirection(3);
-            move();
-            setTurn(2);
-        }
-        
+       
     }
     
     public PlayerOne()

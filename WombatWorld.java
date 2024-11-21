@@ -10,36 +10,29 @@ import java.util.Random;
  */
 public class WombatWorld extends World
 {
-    public int[][] grid;
     private int turn;
     private long time;
     private int speed = 35;
 
     /**
-     * Create a new world with 8x8 cells and
+     * Create a new world with 12x12 cells and
      * with a cell size of 60x60 pixels
      */
     public WombatWorld() 
     {
-        super(12, 12, 60);  
+        super(11, 12, 60,false);  
         Greenfoot.setSpeed(speed);
         turn = 0;
         time = System.currentTimeMillis();
-        grid = new int[getWidth()][getHeight()];
         setBackground("cell.jpg");
         prepare();
+        randomPoop(1,1,1);
     }
 
     public void act() {
-        System.out.println(System.currentTimeMillis() - time);
     }
 
-    /** 
-     * @return      world Grid
-     */
-    public int[][] getGrid() {
-        return grid;
-    }
+    
 
     /** 
      * @return      world turn
@@ -84,35 +77,31 @@ public class WombatWorld extends World
      * 
      */
     public void setup() {
-        grid = new int[getWidth()][getHeight()];
         turn = 1;
         for(int i = 0; i < 2;) {
             int wX = Greenfoot.getRandomNumber(getWidth());
-            int wY = Greenfoot.getRandomNumber(getHeight());
-            if(grid[wX][wY] == 0) {
+            int wY = Greenfoot.getRandomNumber(getHeight()-1)+1;
+             if(getObjectsAt(wX, wY, null).isEmpty()) {   
                 if(i == 1) {
+                   
                     Wombat w1 = new PlayerTwo();
                     addObject(w1, wX, wY);
-                    grid[wX][wY] = 2;
                     i++;
                 }
                 else {
                     Wombat w1 = new PlayerOne();
                     addObject(w1, wX, wY);
-                    grid[wX][wY] = 1;
                     i++;
                 }
-
             }
         }
 
         for(int i = 0; i < 3;) {
-            int wX = (int) (Math.random() * getWidth());
-            int wY = (int) (Math.random() * getHeight());
+            int wX = Greenfoot.getRandomNumber(getWidth());
+            int wY = Greenfoot.getRandomNumber(getHeight() -1)+1;
             if(getObjectsAt(wX, wY, null).isEmpty()) {
                 Leaf l1 = new Leaf();
                 addObject(l1, wX, wY);
-                grid[wX][wY] = 3;
                 i++;
             }    
         }
@@ -126,7 +115,7 @@ public class WombatWorld extends World
     {
         for(int i=0; i<howMany;) {
             int x = Greenfoot.getRandomNumber(getWidth());
-            int y = Greenfoot.getRandomNumber(getHeight());
+            int y = Greenfoot.getRandomNumber(getHeight() -1)+1;
             if(getObjectsAt(x, y, null).isEmpty()) {
                 Leaf leaf = new Leaf();
                 addObject(leaf, x, y);
@@ -139,24 +128,27 @@ public class WombatWorld extends World
      * Place a number of biomasses into the world at random places, if the slot is empty.
      * The number of biomasses can be specified.
      */
-    public void randomPoop(int howMany, int timeout)
+    public void randomPoop(int howMany, int spawn, int timeout)
     {
         for(int i=0; i<howMany;) {
             int x = Greenfoot.getRandomNumber(getWidth());
-            int y = Greenfoot.getRandomNumber(getHeight());
+            int y = Greenfoot.getRandomNumber(getHeight()-1)+1;
             if(getObjectsAt(x, y, null).isEmpty()) {
-                Biomass biomass = new Biomass(getTime() + timeout);
+                Biomass biomass = new Biomass(
+                getTime() + spawn,
+                getTime() + timeout);
                 addObject(biomass, x, y);
+                biomass.setImage((GreenfootImage)null);
                 i++;
             }  
         }
     }
-
+    
     /**
      * Place a number of biomasses with 10 seconds of timeout  
      */
     public void randomPoop(int howMany) {
-        randomPoop(howMany, 10000);
+        randomPoop(howMany, 2000, 10000);
     }
 
     public void addPoop() {
@@ -166,6 +158,7 @@ public class WombatWorld extends World
     public void addLeave() {
         randomLeaves(1);
     }
+    
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
@@ -173,5 +166,7 @@ public class WombatWorld extends World
     private void prepare()
     {
         setup();
+        Score score = new Score();
+        addObject(score,5,0);
     }
 }

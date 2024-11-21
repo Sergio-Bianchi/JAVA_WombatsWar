@@ -50,5 +50,6 @@ public class PlayerTwo extends Wombat
     
     public PlayerTwo() {
         super(2);
+        // setImage("wombat-2.gif");
     }
 }

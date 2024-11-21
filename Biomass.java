@@ -9,12 +9,21 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Biomass extends Actor
 {
     private long timeout;
+    private long spawn;
+    private boolean spawned;
     
     
-    public Biomass(long timeout) {
+    public Biomass(long spawn, long timeout) {
         this.timeout = timeout;
+        this.spawn = spawn;
+        this.spawned = false;
     }
-
+    
+    public Biomass() {}
+    
+    public boolean isSpawned() {
+        return spawned;
+    }
     
     
     /**
@@ -24,8 +33,14 @@ public class Biomass extends Actor
     public void act()
     {
         // Add your action code here.
-        System.out.print("Remains: ");
-        System.out.println((timeout - ((WombatWorld) getWorld()).getTime()));
+        if(!spawned) {
+            if(spawn <= ((WombatWorld) getWorld()).getTime()) {
+                setImage("bio-mass.png");
+                spawned = true;
+            } else {
+                setImage((GreenfootImage)null);
+            }
+        }
         
         if(timeout <= ((WombatWorld) getWorld()).getTime()) {
             getWorld().removeObject(this);

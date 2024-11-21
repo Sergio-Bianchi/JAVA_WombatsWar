@@ -21,6 +21,7 @@ public class Wombat extends Actor
     private int leavesEaten;
     private int player; 
     private long timeout;
+
     private int steps;
     
     public Wombat(int player)
@@ -29,10 +30,6 @@ public class Wombat extends Actor
         leavesEaten = 0;
         steps = 0;
         this.player = player;
-    }
-    
-    public int[][] getGrid() {
-        return getWombatWorld().getGrid();
     }
     
     public int getTurn() {
@@ -56,7 +53,7 @@ public class Wombat extends Actor
     }
     
     public void setTimeout(int timeout) {
-        this.timeout = timeout;
+        this.timeout = getWombatWorld().getTime() + timeout;
     }
     
     public boolean foundWombat() {
@@ -69,6 +66,8 @@ public class Wombat extends Actor
         }
     
     }
+
+    
     
     
     public void poo() {
@@ -102,6 +101,18 @@ public class Wombat extends Actor
         }
     }
     
+    public boolean foundPoop() {
+        Actor biomass = getOneObjectAtOffset(0, 0, Biomass.class);
+        if(biomass != null && ((Biomass) biomass).isSpawned()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    
+    
     /**
      * Eat a leaf.
      */
@@ -112,8 +123,7 @@ public class Wombat extends Actor
             // eat the leaf...
             getWorld().removeObject(leaf);
             
-            leavesEaten = leavesEaten + 1; 
-            timeout = getWombatWorld().getTime() + 2000;
+            leavesEaten = leavesEaten + 1;             
             getWombatWorld().addLeave();
         }
     }
@@ -141,9 +151,26 @@ public class Wombat extends Actor
                 setLocation(getX() - 1, getY());
                 break;
         }
-        myWorld.grid[getX()][getY()] = 2;
         return true;
     }
+    
+    public void snapBack() {
+        switch(direction) {
+            case SOUTH :
+                setLocation(getX(), getY() - 1);
+                break;
+            case EAST :
+                setLocation(getX() - 1, getY());
+                break;
+            case NORTH :
+                setLocation(getX(), getY() + 1);
+                break;
+            case WEST :
+                setLocation(getX() + 1, getY());
+                break;
+        }
+    }
+    
 
     /**
      * Test if we can move forward. Return true if we can, false otherwise.
@@ -171,7 +198,7 @@ public class Wombat extends Actor
         if (x >= myWorld.getWidth() || y >= myWorld.getHeight()) {
             return false;
         }
-        else if (x < 0 || y < 0) {
+        else if (x < 0 || y < 1 ) {
             return false;
         }
         return true;
