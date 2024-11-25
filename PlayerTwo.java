@@ -12,39 +12,52 @@ public class PlayerTwo extends Wombat
      * Do whatever the wombat likes to to just now.
      */
     public void act()
-    {
-        if(getTimeout() <= getWombatWorld().getTime() && getTimeout() != 0) {
-            getWombatWorld().addPoop();
-            setTimeout(0);
-        }
-            
+    {      
+        boolean moved = false; 
+        
         if(foundLeaf()) {
             eatLeaf();
+            getWombatWorld().addPoop();
+        } 
+        if(foundPoop() && getStarTimeout() < getWombatWorld().getTime()) {
+            setTimeout(1000);
         }
-        else if(Greenfoot.isKeyDown("right"))
-        {
-            setDirection(0);
-            move();
-            setTurn(1);
+        if(foundStar()) {
+            setStarTimeout(getStar().getEffectDuration());
+            getWorld().removeObject(getStar());
         }
-        else if(Greenfoot.isKeyDown("left"))
-        {
-            setDirection(1);
-            move();
-            setTurn(1);
+        if(getTimeout() <= getWombatWorld().getTime()) {
+            if(Greenfoot.isKeyDown("right"))
+            {
+                setDirection(0);
+                move();
+                moved = true;
+            }
+            else if(Greenfoot.isKeyDown("left"))
+            {
+                setDirection(1);
+                move();
+                moved = true;
+            }
+            else if(Greenfoot.isKeyDown("up"))
+            {
+                setDirection(2);
+                move();
+                moved = true;
+            }
+            else if(Greenfoot.isKeyDown("down"))
+            {
+                setDirection(3);
+                move();
+                moved = true;
+            }
+            
+            if (foundWombat() && getStarTimeout() < getWombatWorld().getTime() && moved) {
+                snapBack();
+            }
         }
-        else if(Greenfoot.isKeyDown("up"))
-        {
-            setDirection(2);
-            move();
-            setTurn(1);
-        }
-        else if(Greenfoot.isKeyDown("down"))
-        {
-            setDirection(3);
-            move();
-            setTurn(1);
-        }
+       
+       
     }
     
     

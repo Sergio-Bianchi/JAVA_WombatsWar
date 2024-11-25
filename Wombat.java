@@ -21,6 +21,7 @@ public class Wombat extends Actor
     private int leavesEaten;
     private int player; 
     private long timeout;
+    private long starTimeout;
 
     private int steps;
     
@@ -52,20 +53,20 @@ public class Wombat extends Actor
         return timeout;
     }
     
+    public long getStarTimeout() {
+        return starTimeout;
+    }
+    
     public void setTimeout(int timeout) {
         this.timeout = getWombatWorld().getTime() + timeout;
     }
     
-    public boolean foundWombat() {
-        Actor wombat = getOneObjectAtOffset(0, 0, Wombat.class);
-        if(wombat != null) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    
+    public void setStarTimeout(int timeout) {
+        this.starTimeout = getWombatWorld().getTime() + timeout;
     }
+    
+    
+  
 
     
     
@@ -101,6 +102,11 @@ public class Wombat extends Actor
         }
     }
     
+    
+    /** 
+     * Check if wombat is on a Biomass
+     * @return true/false
+     */
     public boolean foundPoop() {
         Actor biomass = getOneObjectAtOffset(0, 0, Biomass.class);
         if(biomass != null && ((Biomass) biomass).isSpawned()) {
@@ -110,8 +116,35 @@ public class Wombat extends Actor
             return false;
         }
     }
-
+    /** Check if wombat is on a Star
+     * @return true/false
+     */
+    public boolean foundStar() {
+        Actor star = getOneObjectAtOffset(0,0,Star.class);  
+        if(star != null) {
+            return true;
+        } else {
+            return false; 
+        }
+    }
     
+    public Star getStar() {
+        return ((Star) getOneObjectAtOffset(0,0,Star.class));
+    }
+    
+    /** Check if wombat is on a Wombat
+     * @return true/false
+     */
+      public boolean foundWombat() {
+        Actor wombat = getOneObjectAtOffset(0, 0, Wombat.class);
+        if(wombat != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    
+    }
     
     /**
      * Eat a leaf.
@@ -123,7 +156,9 @@ public class Wombat extends Actor
             // eat the leaf...
             getWorld().removeObject(leaf);
             
-            leavesEaten = leavesEaten + 1;             
+            leavesEaten = leavesEaten + 1; 
+            getWombatWorld().addPoint(player-1);
+            getWombatWorld().updateScore();
             getWombatWorld().addLeave();
         }
     }
@@ -154,6 +189,8 @@ public class Wombat extends Actor
         return true;
     }
     
+    /** Go back of one cell 
+     */
     public void snapBack() {
         switch(direction) {
             case SOUTH :

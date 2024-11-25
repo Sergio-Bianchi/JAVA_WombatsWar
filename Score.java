@@ -24,13 +24,28 @@ public class Score extends Actor
     
     }
     
-    public void updateScore() {
+    public void update() {
+        int[] scores = ((WombatWorld) getWorld()).getScore();
         StringBuilder string = new StringBuilder()
-        .append(5)
+        .append(scores[0])
         .append(" - ")
-        .append(10);
+        .append(scores[1]);
         
         setImage(new GreenfootImage(string.toString(), 50, Color.BLACK, new Color(0,0,0,0)));
     }
     
+    public void setWinner(int winner) {
+         if(winner == 1) {
+            String string = new String("Player one WINS!");
+            setImage(new GreenfootImage(string, 50, Color.BLACK, new Color(0,0,0,0)));
+
+        } else {
+           String string = new String("Player two WINS!");
+                setImage(new GreenfootImage(string, 50, Color.BLACK, new Color(0,0,0,0)));
+
+        }
+        Greenfoot.delay(20);
+        Greenfoot.setWorld(new WombatWorld());
+        //((WombatWorld)getWorld()).restart();
+    }    
 }
