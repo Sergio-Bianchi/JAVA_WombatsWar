@@ -12,7 +12,7 @@ public class PlayerTwo extends Wombat
      * Do whatever the wombat likes to to just now.
      */
     public void act()
-    {      
+   {      
         boolean moved = false; 
         
         if(foundLeaf()) {
@@ -22,36 +22,45 @@ public class PlayerTwo extends Wombat
         if(foundPoop() && getStarTimeout() < getWombatWorld().getTime()) {
             setTimeout(1000);
         }
+        
+        if(getColorTime() < getWombatWorld().getTime()) {
+            
+            if(getStarTimeout() > getWombatWorld().getTime()) {
+            nextColor();
+            }
+            else {
+                setImage("wombat-2.gif");
+            }
+        } 
         if(foundStar()) {
             setStarTimeout(getStar().getEffectDuration());
+            setColor(1);
             getWorld().removeObject(getStar());
         }
         if(getTimeout() <= getWombatWorld().getTime()) {
             if(Greenfoot.isKeyDown("right"))
             {
                 setDirection(0);
-                move();
                 moved = true;
             }
             else if(Greenfoot.isKeyDown("left"))
             {
                 setDirection(1);
-                move();
                 moved = true;
             }
             else if(Greenfoot.isKeyDown("up"))
             {
                 setDirection(2);
-                move();
                 moved = true;
             }
             else if(Greenfoot.isKeyDown("down"))
             {
                 setDirection(3);
-                move();
                 moved = true;
             }
-            
+            if(moved) {
+                move();
+            }
             if (foundWombat() && getStarTimeout() < getWombatWorld().getTime() && moved) {
                 snapBack();
             }
@@ -63,6 +72,6 @@ public class PlayerTwo extends Wombat
     
     public PlayerTwo() {
         super(2);
-        // setImage("wombat-2.gif");
+        //setImage("wombat-2.gif");
     }
 }

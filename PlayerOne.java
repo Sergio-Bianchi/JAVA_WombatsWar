@@ -22,40 +22,50 @@ public class PlayerOne extends Wombat
         if(foundPoop() && getStarTimeout() < getWombatWorld().getTime()) {
             setTimeout(1000);
         }
+        
+        if(getColorTime() < getWombatWorld().getTime()) {
+            
+            if(getStarTimeout() > getWombatWorld().getTime()) {
+            nextColor();
+            }
+            else {
+                setImage("wombat.png");
+            }
+        } 
         if(foundStar()) {
             setStarTimeout(getStar().getEffectDuration());
+            setColor(1);
             getWorld().removeObject(getStar());
         }
         if(getTimeout() <= getWombatWorld().getTime()) {
             if(Greenfoot.isKeyDown("D"))
             {
                 setDirection(0);
-                move();
                 moved = true;
             }
             else if(Greenfoot.isKeyDown("A"))
             {
                 setDirection(1);
-                move();
                 moved = true;
             }
             else if(Greenfoot.isKeyDown("W"))
             {
                 setDirection(2);
-                move();
                 moved = true;
             }
             else if(Greenfoot.isKeyDown("S"))
             {
                 setDirection(3);
-                move();
                 moved = true;
             }
-            
+            if(moved) {
+                move();
+            }
             if (foundWombat() && getStarTimeout() < getWombatWorld().getTime() && moved) {
                 snapBack();
             }
         }
+       
        
     }
     

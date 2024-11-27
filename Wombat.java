@@ -22,6 +22,9 @@ public class Wombat extends Actor
     private int player; 
     private long timeout;
     private long starTimeout;
+    
+    private int color;
+    private long colorTime;
 
     private int steps;
     
@@ -53,6 +56,14 @@ public class Wombat extends Actor
         return timeout;
     }
     
+    public int getColor() {
+        return color;
+    }
+    
+    public long getColorTime() {
+        return colorTime;
+    }
+    
     public long getStarTimeout() {
         return starTimeout;
     }
@@ -63,6 +74,23 @@ public class Wombat extends Actor
     
     public void setStarTimeout(int timeout) {
         this.starTimeout = getWombatWorld().getTime() + timeout;
+    }
+    
+    public void setColor(int color) {
+        this.color = color;
+    }
+    
+    public void nextColor() {
+        color++;
+        if(color == 9) {
+            color = 1;
+        }
+        colorTime = getWombatWorld().getTime() + 200;
+        setImage(String.format("wombat-rainbow-%d.png", color));
+    }
+    
+    public void setColorTime(long time) {
+        this.colorTime = time;
     }
     
     
