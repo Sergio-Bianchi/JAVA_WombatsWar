@@ -27,7 +27,7 @@ public class WombatWorld extends World
         Greenfoot.setSpeed(speed);
         turn = 0;
         time = System.currentTimeMillis();
-        setBackground("cell.jpg");
+        setBackground("cellW.jpg");
         prepare();
         randomPoop(1,1,1);
     }

@@ -35,7 +35,7 @@ public class Biomass extends Actor
         // Add your action code here.
         if(!spawned) {
             if(spawn <= ((WombatWorld) getWorld()).getTime()) {
-                setImage("bio-mass.png");
+                setImage("bio-massW.png");
                 spawned = true;
             } else {
                 setImage((GreenfootImage)null);
