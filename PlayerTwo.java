@@ -29,7 +29,7 @@ public class PlayerTwo extends Wombat
             nextColor();
             }
             else {
-                setImage("wombat-2.gif");
+                setImage("wombat-2W.png");
             }
         } 
         if(foundStar()) {

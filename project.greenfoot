@@ -1,8 +1,8 @@
 #Greenfoot project file
 class.Biomass.image=bio-massW.png
 class.Leaf.image=leafW.png
-class.PlayerOne.image=wombat.png
-class.PlayerTwo.image=wombat-2.gif
+class.PlayerOne.image=wombatW.png
+class.PlayerTwo.image=wombat-2W.png
 class.Star.image=star.gif
 class.Testing.image=wombat-rainbow-1.png
 class.Wombat.image=wombat.png
@@ -48,10 +48,10 @@ dependency8.type=UsesDependency
 dependency9.from=Wombat
 dependency9.to=WombatWorld
 dependency9.type=UsesDependency
-editor.fx.0.height=920
-editor.fx.0.width=1269
-editor.fx.0.x=100
-editor.fx.0.y=100
+editor.fx.0.height=868
+editor.fx.0.width=1456
+editor.fx.0.x=-8
+editor.fx.0.y=-8
 height=868
 package.numDependencies=14
 package.numTargets=9
