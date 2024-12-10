@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=WombatWorld
-comment0.text=\r\n\ A\ world\ where\ wombats\ fight.\r\n\ \r\n\ @author\ Sergio\ Bianchi\ &\ Michael\ Kolling\r\n\ @version\ 24.11.2024\r\n
+comment0.text=\r\n\ A\ world\ where\ wombats\ fight.\r\n\ \r\n\ @author\ Sergio\ Bianchi\ &\ Michael\ Kolling\r\n\ @version\ 10.12.2024\r\n
 comment1.params=
 comment1.target=WombatWorld()
 comment1.text=\r\n\ Create\ a\ new\ world\ with\ 12x12\ cells\ and\r\n\ with\ a\ cell\ size\ of\ 60x60\ pixels\r\n
@@ -37,7 +37,9 @@ comment20.params=
 comment20.target=void\ prepare()
 comment20.text=\r\n\ Prepare\ the\ world\ for\ the\ start\ of\ the\ program.\r\n\ That\ is\:\ create\ the\ initial\ objects\ and\ add\ them\ to\ the\ world.\r\n
 comment21.params=
-comment21.target=void\ restart()
+comment21.target=void\ pause()
+comment22.params=
+comment22.target=void\ restart()
 comment3.params=player
 comment3.target=void\ addPoint(int)
 comment4.params=
@@ -55,4 +57,4 @@ comment8.target=long\ getTime()
 comment8.text=\ \r\n\ @return\ \ \ \ \ \ Returns\ the\ current\ game\ time\ (the\ total\ moves)\r\n
 comment9.params=
 comment9.target=void\ switchTurn()
-numComments=22
+numComments=23

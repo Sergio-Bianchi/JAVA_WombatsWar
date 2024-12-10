@@ -6,7 +6,7 @@ import java.util.Random;
  * A world where wombats fight.
  * 
  * @author Sergio Bianchi & Michael Kolling
- * @version 24.11.2024
+ * @version 10.12.2024
  */
 public class WombatWorld extends World
 {
@@ -14,8 +14,11 @@ public class WombatWorld extends World
     private long time;
     private int speed = 35;
     private int[] score = new int[2];
-    private int winningScore = 30;
+    private int winningScore = 2;
     private long starSpawn;
+    
+    static private GreenfootSound song = new GreenfootSound ( "snow-1.mp3" );
+    private long songPause;
     
     /**
      * Create a new world with 12x12 cells and
@@ -33,6 +36,13 @@ public class WombatWorld extends World
     }
 
     public void act() {
+        
+        if(!song.isPlaying()) {
+            song.play();
+            song.setVolume(50);
+
+        }
+        
         
         if(starSpawn <= getTime()) {
             randomStar(1, 10000, 5000);
@@ -95,6 +105,9 @@ public class WombatWorld extends World
     public void setTurn(int t) {
         turn = t;
     }
+    
+
+    
 
     /** Setup the game to start 
      * 
@@ -222,6 +235,13 @@ public class WombatWorld extends World
         Score scoreHead = new Score();
         addObject(scoreHead,5,0);
         scoreHead.update();
+    
+    }
+    
+    public void pause()
+    {
+            System.out.println("PAUSA");
+           song.stop();
     }
     
     

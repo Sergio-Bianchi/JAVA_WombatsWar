@@ -45,7 +45,9 @@ public class Score extends Actor
 
         }
         Greenfoot.delay(20);
-        Greenfoot.setWorld(new WombatWorld());
+        WombatWorld newWorld = new WombatWorld();
+        Greenfoot.setWorld(newWorld);
+
         //((WombatWorld)getWorld()).restart();
     }    
 }
