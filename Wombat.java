@@ -86,7 +86,7 @@ public class Wombat extends Actor
             color = 1;
         }
         colorTime = getWombatWorld().getTime() + 200;
-        setImage(String.format("wombat-rainbow-%d.png", color));
+        setImage(String.format("wombat-rainbow-%dW.png", color));
     }
     
     public void setColorTime(long time) {
